@@ -36,5 +36,35 @@ private void configureSecurity() {
 }
 
 private void createCredentials() {
-    Logger.global.info("Here is where I'll setup credentials")
+    def GIT_USERNAME = System.getenv("GIT_USERNAME")
+    def GIT_PASSWORD = System.getenv("GIT_PASSWORD")
+    def GIT_NAME = System.getenv("GIT_NAME")
+    def GIT_EMAIL = System.getenv("GIT_EMAIL")
+
+    Credentials githubLogin = new UsernamePasswordCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "git-login",
+        "description:git-login",
+        "${GIT_USERNAME}",
+        "${GIT_PASSWORD}"
+    )
+
+    Credentials gitName = new StringCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "git-name",
+        "description:git-name",
+        Secret.fromString("${GIT_NAME}")
+    )
+
+    Credentials gitEmail = new StringCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "git-email",
+        "description:git-email",
+        Secret.fromString("${GIT_EMAIL}")
+    )
+
+    def credentials_store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
+    credentials_store.addCredentials(Domain.global(), githubLogin)
+    credentials_store.addCredentials(Domain.global(), gitName)
+    credentials_store.addCredentials(Domain.global(), gitEmail)
 }
