@@ -10,11 +10,11 @@ ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false \
 USER root
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
-    && apt-get update \
+    && apt-get update -y \
     && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-    && apt-get update \
+    && apt-get update -y \
     && apt-get install -y docker-ce \
     && systemctl enable docker \
     && usermod -aG docker jenkins
