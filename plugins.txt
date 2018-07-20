@@ -6,8 +6,10 @@ authentication-tokens
 bouncycastle-api
 branch-api
 build-timeout
+build-timestamp
 cloudbees-folder
 command-launcher
+conditional-buildstep
 credentials
 credentials-binding
 display-url-api
@@ -15,6 +17,7 @@ docker-commons
 docker-workflow
 durable-task
 email-ext
+external-monitor-job
 git
 git-client
 git-server
@@ -24,6 +27,7 @@ github-branch-source
 gradle
 handlebars
 jackson2-api
+javadoc
 jdk-tool
 jquery-detached
 jsch
@@ -33,8 +37,10 @@ mailer
 mapdb-api
 matrix-auth
 matrix-project
+maven-plugin
 momentjs
 pam-auth
+parameterized-trigger
 pipeline-build-step
 pipeline-github-lib
 pipeline-graph-analysis
@@ -50,6 +56,7 @@ pipeline-stage-tags-metadata
 pipeline-stage-view
 plain-credentials
 resource-disposer
+run-condition
 scm-api
 script-security
 ssh-credentials
@@ -58,6 +65,7 @@ structs
 subversion
 timestamper
 token-macro
+windows-slaves
 workflow-aggregator
 workflow-api
 workflow-basic-steps
