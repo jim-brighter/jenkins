@@ -41,6 +41,9 @@ private void createCredentials() {
     def GIT_NAME = System.getenv("GIT_NAME")
     def GIT_EMAIL = System.getenv("GIT_EMAIL")
 
+    def DOCKER_USERNAME = System.getenv("DOCKER_USERNAME")
+    def DOCKER_PASSWORD = System.getenv("DOCKER_PASSWORD")
+
     Credentials githubLogin = new UsernamePasswordCredentialsImpl(
         CredentialsScope.GLOBAL,
         "git-login",
@@ -63,8 +66,17 @@ private void createCredentials() {
         Secret.fromString("${GIT_EMAIL}")
     )
 
+    Credentials dockerLogin = new UsernamePasswordCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "docker-login",
+        "description:docker-login",
+        "${DOCKER_USERNAME}",
+        "${DOCKER_PASSWORD}"
+    )
+
     def credentials_store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
     credentials_store.addCredentials(Domain.global(), githubLogin)
     credentials_store.addCredentials(Domain.global(), gitName)
     credentials_store.addCredentials(Domain.global(), gitEmail)
+    credentials_store.addCredentials(Domain.global(), dockerLogin)
 }
