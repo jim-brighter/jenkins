@@ -17,6 +17,7 @@ Logger.global.info("Running startup script for Jim's Jenkins")
 
 configureSecurity()
 createCredentials()
+configureStyle()
 
 Jenkins.instance.setNumExecutors(2)
 Jenkins.instance.save()
@@ -79,4 +80,12 @@ private void createCredentials() {
     credentials_store.addCredentials(Domain.global(), gitName)
     credentials_store.addCredentials(Domain.global(), gitEmail)
     credentials_store.addCredentials(Domain.global(), dockerLogin)
+}
+
+private void configureStyle() {
+    for (pd in PageDecorator.all()) {
+        if (pd instanceof org.codefirst.SimpleThemeDecorator) {
+            pd.cssUrl = 'https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-indigo.css'
+        }
+    }
 }
