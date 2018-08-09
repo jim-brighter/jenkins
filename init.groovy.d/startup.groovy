@@ -85,7 +85,7 @@ private void createCredentials() {
 private void configureStyle() {
     for (pd in PageDecorator.all()) {
         if (pd instanceof org.codefirst.SimpleThemeDecorator) {
-            pd.cssUrl = 'https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-indigo.css'
+            pd.cssUrl = 'https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css'
         }
     }
 }
