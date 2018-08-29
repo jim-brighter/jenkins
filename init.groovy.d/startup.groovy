@@ -2,6 +2,8 @@ import jenkins.model.*
 import hudson.model.*
 import hudson.security.*
 import java.util.logging.Logger
+import java.util.List
+import java.util.ArrayList
 import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.impl.*
@@ -86,6 +88,10 @@ private void configureStyle() {
     for (pd in PageDecorator.all()) {
         if (pd instanceof org.codefirst.SimpleThemeDecorator) {
             pd.cssUrl = 'https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css'
+            org.jenkinsci.plugins.simpletheme.ThemeElement themeElement = new org.jenkinsci.plugins.simpletheme.CssUrlThemeElement('https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css')
+            List<org.jenkinsci.plugins.simpletheme.ThemeElement> themes = new ArrayList<org.jenkinsci.plugins.simpletheme.ThemeElement>()
+            themes.add(themeElement)
+            pd.setElements(themes)
         }
     }
 }

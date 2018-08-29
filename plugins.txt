@@ -55,6 +55,7 @@ pipeline-stage-step
 pipeline-stage-tags-metadata
 pipeline-stage-view
 plain-credentials
+rebuild
 resource-disposer
 run-condition
 scm-api
