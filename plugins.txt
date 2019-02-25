@@ -33,6 +33,7 @@ jquery-detached
 jsch
 junit
 ldap
+lockable-resources
 mailer
 mapdb-api
 matrix-auth
