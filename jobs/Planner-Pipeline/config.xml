@@ -26,7 +26,7 @@
         <hudson.model.StringParameterDefinition>
           <name>GIT_BRANCH</name>
           <description></description>
-          <defaultValue>ci</defaultValue>
+          <defaultValue>master</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
