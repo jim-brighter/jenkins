@@ -20,7 +20,7 @@ doctl compute droplet create $NEW_DROPLET \
 --ssh-keys 22134471,23526912 \
 --enable-monitoring \
 --tag-names $NEW_DROPLET \
---user-data-file user-data \
+--user-data-file jenkins-user-data.yml \
 --wait
 
 # Get ID of new droplet
