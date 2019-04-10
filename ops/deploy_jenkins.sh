@@ -12,6 +12,9 @@ echo "Old Droplet: $OLD_DROPLET"
 NEW_DROPLET=$([ $OLD_DROPLET = 'jenkins-g' ] && echo 'jenkins-b' || echo 'jenkins-g')
 echo "New Droplet: $NEW_DROPLET"
 
+curl -L -o jenkins-user-data.sh \
+https://$GIT_USERNAME:$GIT_PASSWORD@raw.githubusercontent.com/jim-brighter/ops-secrets/master/jenkins/jenkins-user-data.sh
+
 # # Launch new Jenkins droplet
 doctl compute droplet create $NEW_DROPLET \
 --region nyc3 \
@@ -20,7 +23,7 @@ doctl compute droplet create $NEW_DROPLET \
 --ssh-keys 22134471,23526912 \
 --enable-monitoring \
 --tag-names $NEW_DROPLET \
---user-data-file jenkins-user-data.yml \
+--user-data-file jenkins-user-data.sh \
 --wait
 
 # Get ID of new droplet
