@@ -6,7 +6,7 @@ set -e
 doctl auth init -t $DO_TOKEN
 
 # Initialize variables
-OLD_DROPLET=$(doctl compute droplet list jenkins* --format Name | sed -n 2p)
+OLD_DROPLET=$(doctl compute droplet list 'jenkins*' --format Name | sed -n 2p)
 echo "Old Droplet: $OLD_DROPLET"
 
 NEW_DROPLET=$([ $OLD_DROPLET = 'jenkins-g' ] && echo 'jenkins-b' || echo 'jenkins-g')
@@ -28,11 +28,23 @@ doctl compute droplet create $NEW_DROPLET \
 
 # Get ID of new droplet
 NEW_DROPLET_ID=$(doctl compute droplet list $NEW_DROPLET --format ID | sed -n 2p)
+NEW_DROPLET_IP=$(doctl compute droplet list $NEW_DROPLET --format "Public IPv4" | sed -n 2p)
 echo "New Droplet ID: $NEW_DROPLET_ID"
 
-# ####
-# # Here is where we wait for jenkins to respond on port 80 before moving on to next step
-# ####
+attempts=0
+max_attempts=36
+
+until $(curl --output /dev/null --silent --head --fail http://$NEW_DROPLET_IP/login\?from=%2F); do
+  
+  if [ ${attempts} -eq ${max_attempts} ]; then
+    echo "Jenkins failed to respond in a timely manner!"
+    exit 1
+  fi
+
+  attempts=$(($attempts+1))
+  echo "Waiting for Jenkins to respond at http://$NEW_DROPLET_IP ..."
+  sleep 10
+done
 
 # Reassign jimsjenkins.xyz floating ip to new droplet
 doctl compute floating-ip-action assign 159.203.150.25 $NEW_DROPLET_ID
