@@ -21,9 +21,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y docker-ce \
     && systemctl enable docker \
     && usermod -aG docker jenkins \
-    && curl -L -o /opt/doctl-1.18.0-linux-amd64.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.18.0/doctl-1.18.0-linux-amd64.tar.gz \
-    && tar -xzf /opt/doctl-1.18.0-linux-amd64.tar.gz \
-    && ln -s /opt/doctl /usr/bin/doctl
+    && curl -L -o /opt/doctl-cli.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.18.0/doctl-1.18.0-linux-amd64.tar.gz \
+    && mkdir -p /opt/doctl-cli/ \
+    && tar -xzf /opt/doctl-cli.tar.gz -C /opt/doctl-cli \
+    && ln -s /opt/doctl-cli/doctl /usr/bin/doctl
 
 USER jenkins
 
