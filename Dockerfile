@@ -11,7 +11,7 @@ USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export TERM=linux \
-    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && apt-get update -y \
     && apt-get dist-upgrade -y \
     && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 \
@@ -20,7 +20,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update -y \
     && apt-get install -y docker-ce \
     && systemctl enable docker \
-    && usermod -aG docker jenkins
+    && usermod -aG docker jenkins \
+    && curl -L -o /opt/doctl-1.18.0-linux-amd64.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.18.0/doctl-1.18.0-linux-amd64.tar.gz \
+    && tar -xzf /opt/doctl-1.18.0-linux-amd64.tar.gz \
+    && ln -s /opt/doctl /usr/bin/doctl
 
 USER jenkins
 
