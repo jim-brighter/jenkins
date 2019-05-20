@@ -47,6 +47,8 @@ private void createCredentials() {
     def DOCKER_USERNAME = System.getenv("DOCKER_USERNAME")
     def DOCKER_PASSWORD = System.getenv("DOCKER_PASSWORD")
 
+    def DO_TOKEN = System.getenv("DO_TOKEN")
+
     Credentials githubLogin = new UsernamePasswordCredentialsImpl(
         CredentialsScope.GLOBAL,
         "git-login",
@@ -77,11 +79,19 @@ private void createCredentials() {
         "${DOCKER_PASSWORD}"
     )
 
+    Credentials doToken = new StringCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "do-token",
+        "description:do-token",
+        Secret.fromString("${DO_TOKEN}")
+    )
+
     def credentials_store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
     credentials_store.addCredentials(Domain.global(), githubLogin)
     credentials_store.addCredentials(Domain.global(), gitName)
     credentials_store.addCredentials(Domain.global(), gitEmail)
     credentials_store.addCredentials(Domain.global(), dockerLogin)
+    credentials_store.addCredentials(Domain.global(), doToken)
 }
 
 private void configureStyle() {
