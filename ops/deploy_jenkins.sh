@@ -20,7 +20,7 @@ doctl compute droplet create $NEW_DROPLET \
 --region nyc3 \
 --size s-1vcpu-3gb \
 --image 47146497 \
---ssh-keys 22134471,23526912 \
+--ssh-keys 22134471,23526912,24637185 \
 --enable-monitoring \
 --tag-names $NEW_DROPLET \
 --user-data-file jenkins-user-data.sh \
@@ -51,3 +51,6 @@ doctl compute floating-ip-action assign 159.203.150.25 $NEW_DROPLET_ID
 
 # Move new droplet to jimsjenkins.xyz project
 doctl projects resources assign f49dc8d4-b71f-4693-9d3d-a0f42e3a99bb --resource=do:droplet:$NEW_DROPLET_ID
+
+# Delete old droplet
+doctl compute droplet delete -f $OLD_DROPLET
