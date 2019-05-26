@@ -4,7 +4,8 @@ ENV JENKINS_DIR /usr/share/jenkins/ref
 
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false \
                 -XX:+UnlockExperimentalVMOptions \
-                -XX:+UseCGroupMemoryLimitForHeap
+                -XX:+UseCGroupMemoryLimitForHeap \
+                -XX:MaxRAMFraction=2
 
 USER root
 
