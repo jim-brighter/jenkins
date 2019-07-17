@@ -27,7 +27,7 @@ log "Launching the new droplet"
 doctl compute droplet create $NEW_DROPLET \
 --region nyc3 \
 --size s-1vcpu-3gb \
---image 47146497 \
+--image 48822839 \
 --ssh-keys 22134471,23526912,24637185 \
 --enable-monitoring \
 --tag-names $NEW_DROPLET \
