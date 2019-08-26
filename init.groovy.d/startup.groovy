@@ -97,8 +97,8 @@ private void createCredentials() {
 private void configureStyle() {
     for (pd in PageDecorator.all()) {
         if (pd instanceof org.codefirst.SimpleThemeDecorator) {
-            pd.cssUrl = 'https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css'
-            org.jenkinsci.plugins.simpletheme.ThemeElement themeElement = new org.jenkinsci.plugins.simpletheme.CssUrlThemeElement('https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css')
+            pd.cssUrl = 'https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css'
+            org.jenkinsci.plugins.simpletheme.ThemeElement themeElement = new org.jenkinsci.plugins.simpletheme.CssUrlThemeElement('https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css')
             List<org.jenkinsci.plugins.simpletheme.ThemeElement> themes = new ArrayList<org.jenkinsci.plugins.simpletheme.ThemeElement>()
             themes.add(themeElement)
             pd.setElements(themes)
