@@ -19,7 +19,7 @@ Logger.global.info("Running startup script for Jim's Jenkins")
 
 configureSecurity()
 createCredentials()
-configureStyle()
+//configureStyle()
 
 Jenkins.instance.setNumExecutors(2)
 Jenkins.instance.save()
