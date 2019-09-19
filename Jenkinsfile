@@ -14,25 +14,28 @@ node {
     }
 
     stage("PULL BASE IMAGES") {
-        sh """
-            docker pull jenkins/jenkins:latest
-        """
+        sh label "Pull Base Images"
+            script """
+                docker pull jenkins/jenkins:latest
+            """
     }
 
     stage("BUILD JENKINS") {
-        sh """
-            docker build -t jimbrighter/jenkins:latest -f Dockerfile .
-        """
+        sh label "Build Jenkins Docker Image"
+            script """
+                docker build -t jimbrighter/jenkins:latest -f Dockerfile .
+            """
     }
 
     stage("PUSH DOCKER") {
         withCredentials([
             usernamePassword(credentialsId: "docker-login", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
         ]) {
-            sh """
-                docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-                docker push jimbrighter/jenkins:latest
-            """
+            sh label "Push Docker Image"
+                script """
+                    docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                    docker push jimbrighter/jenkins:latest
+                """
         }
     }
 
@@ -45,22 +48,23 @@ node {
             def tag = "jenkins-${BUILD_TIMESTAMP}-${GIT_BRANCH}"
             tag = tag.replace(" ", "_",).replace(":","-")
             def origin = "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jim-brighter/jenkins.git"
-            sh """
-                git remote set-url origin https://github.com/jim-brighter/jenkins.git
-                git config user.name "${GIT_NAME}"
-                git config user.email ${GIT_EMAIL}
-                git tag -a ${tag} -m "New Tag ${tag}"
-                git push ${origin} ${tag}
+            sh label "Push Git tag and Merge to Master"
+                script """
+                    git remote set-url origin https://github.com/jim-brighter/jenkins.git
+                    git config user.name "${GIT_NAME}"
+                    git config user.email ${GIT_EMAIL}
+                    git tag -a ${tag} -m "New Tag ${tag}"
+                    git push ${origin} ${tag}
 
-                if [ "${GIT_BRANCH}" = "ci" ]; then
-                    git checkout -- .
-                    git checkout master
-                    git merge ${GIT_BRANCH}
-                    git push ${origin} master
-                else
-                    exit 0
-                fi
-            """
+                    if [ "${GIT_BRANCH}" = "ci" ]; then
+                        git checkout -- .
+                        git checkout master
+                        git merge ${GIT_BRANCH}
+                        git push ${origin} master
+                    else
+                        exit 0
+                    fi
+                """
         }
     }
 }
