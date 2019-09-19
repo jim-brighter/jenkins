@@ -14,15 +14,15 @@ node {
     }
 
     stage("PULL BASE IMAGES") {
-        sh label "Pull Base Images"
-            script """
+        sh label: "Pull Base Images",
+            script: """
                 docker pull jenkins/jenkins:latest
             """
     }
 
     stage("BUILD JENKINS") {
-        sh label "Build Jenkins Docker Image"
-            script """
+        sh label: "Build Jenkins Docker Image",
+            script: """
                 docker build -t jimbrighter/jenkins:latest -f Dockerfile .
             """
     }
@@ -31,8 +31,8 @@ node {
         withCredentials([
             usernamePassword(credentialsId: "docker-login", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
         ]) {
-            sh label "Push Docker Image"
-                script """
+            sh label: "Push Docker Image",
+                script: """
                     docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
                     docker push jimbrighter/jenkins:latest
                 """
@@ -48,8 +48,8 @@ node {
             def tag = "jenkins-${BUILD_TIMESTAMP}-${GIT_BRANCH}"
             tag = tag.replace(" ", "_",).replace(":","-")
             def origin = "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jim-brighter/jenkins.git"
-            sh label "Push Git tag and Merge to Master"
-                script """
+            sh label: "Push Git tag and Merge to Master",
+                script: """
                     git remote set-url origin https://github.com/jim-brighter/jenkins.git
                     git config user.name "${GIT_NAME}"
                     git config user.email ${GIT_EMAIL}
