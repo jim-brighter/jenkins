@@ -11,6 +11,7 @@ node {
             branch: "${GIT_BRANCH}"
         )
         currentBuild.setDisplayName("${GIT_BRANCH}-${BUILD_NUMBER}")
+        sh "chmod +x ./pipeline/*.sh"
     }
 
     stage("PULL BASE IMAGES") {
