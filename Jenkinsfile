@@ -44,15 +44,11 @@ node {
                 "origin=${origin}",
                 "tag=${tag}"
             ]) {
-                sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
-            }
 
-            if (GIT_BRANCH == "ci") {
-                withEnv([
-                    "origin=${origin}",
-                    "tag=${tag}"
-                ]) {
-                    sh label: "Merge to Master", script "./pipeline/merge-to-master.sh"
+                sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
+
+                if (GIT_BRANCH == "ci") {
+                    sh label: "Merge to Master", script: "./pipeline/merge-to-master.sh"
                 }
             }
         }
