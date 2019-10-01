@@ -40,10 +40,15 @@ node {
             tag = tag.replace(" ", "_",).replace(":","-")
             def origin = "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jim-brighter/jenkins.git"
 
-            sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
-            
-            if (GIT_BRANCH == "ci") {
-                sh label: "Merge to Master", script "./pipeline/merge-to-master.sh"
+            withEnv([
+                "origin=${origin}",
+                "tag=${tag}"
+            ]) {
+                sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
+
+                if (GIT_BRANCH == "ci") {
+                    sh label: "Merge to Master", script "./pipeline/merge-to-master.sh"
+                }
             }
         }
     }
