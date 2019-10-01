@@ -14,18 +14,18 @@ node {
     }
 
     stage("PULL BASE IMAGES") {
-        sh script: "./pipeline/pull-base-images.sh", label: "Pull Base Images"
+        sh label: "Pull Base Images", script: "./pipeline/pull-base-images.sh"
     }
 
     stage("BUILD JENKINS") {
-        sh script: "./pipeline/build-jenkins.sh", label: "Build Jenkins Docker Image"
+        sh label: "Build Jenkins Docker Image", script: "./pipeline/build-jenkins.sh"
     }
 
     stage("PUSH DOCKER") {
         withCredentials([
             usernamePassword(credentialsId: "docker-login", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
         ]) {
-            sh script: "./pipeline/push-docker.sh", label: "Push Docker Image"
+            sh label: "Push Docker Image", script: "./pipeline/push-docker.sh"
         }
     }
 
@@ -39,10 +39,10 @@ node {
             tag = tag.replace(" ", "_",).replace(":","-")
             def origin = "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jim-brighter/jenkins.git"
 
-            sh script: "./pipeline/push-git-tag.sh", label: "Push Git Tag"
+            sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
             
             if (GIT_BRANCH == "ci") {
-                sh script "./pipeline/merge-to-master.sh", label: "Merge to Master"
+                sh label: "Merge to Master", script "./pipeline/merge-to-master.sh"
             }
         }
     }
