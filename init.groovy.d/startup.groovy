@@ -19,7 +19,6 @@ Logger.global.info("Running startup script for Jim's Jenkins")
 
 configureSecurity()
 createCredentials()
-//configureStyle()
 
 Jenkins.instance.setNumExecutors(2)
 Jenkins.instance.save()
@@ -92,16 +91,4 @@ private void createCredentials() {
     credentials_store.addCredentials(Domain.global(), gitEmail)
     credentials_store.addCredentials(Domain.global(), dockerLogin)
     credentials_store.addCredentials(Domain.global(), doToken)
-}
-
-private void configureStyle() {
-    for (pd in PageDecorator.all()) {
-        if (pd instanceof org.codefirst.SimpleThemeDecorator) {
-            pd.cssUrl = 'https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css'
-            org.jenkinsci.plugins.simpletheme.ThemeElement themeElement = new org.jenkinsci.plugins.simpletheme.CssUrlThemeElement('https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css')
-            List<org.jenkinsci.plugins.simpletheme.ThemeElement> themes = new ArrayList<org.jenkinsci.plugins.simpletheme.ThemeElement>()
-            themes.add(themeElement)
-            pd.setElements(themes)
-        }
-    }
 }
