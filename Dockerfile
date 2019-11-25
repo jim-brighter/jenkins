@@ -12,12 +12,12 @@ USER root
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export TERM=linux \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-    && apt-get update -y \
+    && apt-get update \
     && apt-get dist-upgrade -y \
     && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-    && apt-get update -y \
+    && apt-get update \
     && apt-get install -y docker-ce docker-ce-cli containerd.io \
     && systemctl enable docker \
     && usermod -aG docker jenkins \
