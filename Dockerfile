@@ -31,5 +31,4 @@ USER jenkins
 COPY plugins.txt $JENKINS_DIR/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < $JENKINS_DIR/plugins.txt
 
-COPY jobs $JENKINS_DIR/jobs/
 COPY init.groovy.d $JENKINS_DIR/init.groovy.d/
