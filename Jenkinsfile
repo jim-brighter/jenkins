@@ -9,6 +9,10 @@ def isPushToMaster() {
 }
 
 node {
+
+    properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')),
+                [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false]])
+
     deleteDir()
 
     stage("INIT") {
