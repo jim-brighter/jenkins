@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker pull jenkins/jenkins:latest
+docker pull jenkins/jenkins:jdk11

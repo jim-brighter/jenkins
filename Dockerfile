@@ -1,11 +1,9 @@
-FROM jenkins/jenkins:latest
+FROM jenkins/jenkins:jdk11
 
 ENV JENKINS_DIR /usr/share/jenkins/ref
 
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false \
-                -XX:+UnlockExperimentalVMOptions \
-                -XX:+UseCGroupMemoryLimitForHeap \
-                -XX:MaxRAMFraction=2
+                -XX:MaxRAMPercentage=50
 
 USER root
 
