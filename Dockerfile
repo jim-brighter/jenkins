@@ -3,7 +3,8 @@ FROM jenkins/jenkins:jdk11
 ENV JENKINS_DIR /usr/share/jenkins/ref
 
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false \
-                -XX:MaxRAMPercentage=50
+                -XX:MaxRAMPercentage=50 \
+                -XX:+PrintFlagsFinal -XshowSettings:vm
 
 USER root
 
