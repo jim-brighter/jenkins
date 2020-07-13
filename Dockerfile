@@ -3,7 +3,8 @@ FROM jenkins/jenkins:jdk11
 ENV JENKINS_DIR /usr/share/jenkins/ref
 
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false \
-                -Dorg.apache.commons.jelly.tags.fmt.timeZone=America/New_York
+                -Dorg.apache.commons.jelly.tags.fmt.timeZone=America/New_York \
+                -XX:MaxRAMPercentage=50
 
 USER root
 
