@@ -10,7 +10,7 @@ USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export TERM=linux \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get update \
     && apt-get dist-upgrade -y \
     && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 \
