@@ -23,7 +23,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && curl -L https://github.com/digitalocean/doctl/releases/download/v1.45.0/doctl-1.45.0-linux-amd64.tar.gz -o /opt/doctl-cli.tar.gz \
     && mkdir -p /opt/doctl-cli/ \
     && tar -xzf /opt/doctl-cli.tar.gz -C /opt/doctl-cli \
-    && ln -s /opt/doctl-cli/doctl /usr/bin/doctl
+    && ln -s /opt/doctl-cli/doctl /usr/bin/doctl \
+    && curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/bin/jq \
+    && chmod +x /usr/bin/jq
 
 USER jenkins
 
