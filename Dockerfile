@@ -13,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 \
+    && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential postgresql-client-9.6 zip \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
