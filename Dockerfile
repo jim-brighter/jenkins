@@ -30,7 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && curl -L https://golang.org/dl/go1.15.linux-amd64.tar.gz -o /opt/go1.15.linux-amd64.tar.gz \
     && mkdir -p /opt/go-1.15 \
     && tar -xzf /opt/go1.15.linux-amd64.tar.gz -C /opt/go-1.15 \
-    && ln -s /opt/go-1.15/bin/go /usr/bin/go \
+    && ln -s /opt/go-1.15/go/bin/go /usr/bin/go \
     && rm -f /opt/go1.15.linux-amd64.tar.gz
 
 USER jenkins
