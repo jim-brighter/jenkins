@@ -24,8 +24,14 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && mkdir -p /opt/doctl-cli/ \
     && tar -xzf /opt/doctl-cli.tar.gz -C /opt/doctl-cli \
     && ln -s /opt/doctl-cli/doctl /usr/bin/doctl \
+    && rm -f /opt/doctl-cli.tar.gz \
     && curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/bin/jq \
-    && chmod +x /usr/bin/jq
+    && chmod +x /usr/bin/jq \
+    && curl -L https://golang.org/dl/go1.15.linux-amd64.tar.gz -o /opt/go1.15.linux-amd64.tar.gz \
+    && mkdir -p /opt/go-1.15 \
+    && tar -xzf /opt/go1.15.linux-amd64.tar.gz -C /opt/go-1.15 \
+    && ln -s /opt/go-1.15/bin/go /usr/bin/go \
+    && rm -f /opt/go1.15.linux-amd64.tar.gz
 
 USER jenkins
 
