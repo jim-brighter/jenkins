@@ -8,7 +8,7 @@ services:
     ports:
       - "80:8080"
       - "50000:50000"
-    mem_limit: 4092m
+    mem_limit: 3584m
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
