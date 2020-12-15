@@ -24,11 +24,13 @@ blueocean-pipeline-scm-api
 blueocean-rest
 blueocean-rest-impl
 blueocean-web
+bootstrap4-api
 bouncycastle-api
 branch-api
 build-name-setter
 build-timeout
 build-timestamp
+checks-api
 cloudbees-bitbucket-branch-source
 cloudbees-folder
 command-launcher
@@ -43,6 +45,7 @@ echarts-api
 email-ext
 external-monitor-job
 favorite
+font-awesome-api
 git
 git-client
 git-server
@@ -90,6 +93,7 @@ pipeline-stage-tags-metadata
 pipeline-stage-view
 plain-credentials
 plugin-util-api
+popper-api
 pubsub-light
 rebuild
 resource-disposer
