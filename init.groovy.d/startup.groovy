@@ -48,6 +48,8 @@ private void createCredentials() {
 
     def DO_TOKEN = System.getenv("DO_TOKEN")
 
+    def NPM_TOKEN = System.getenv("NPM_TOKEN")
+
     Credentials githubLogin = new UsernamePasswordCredentialsImpl(
         CredentialsScope.GLOBAL,
         "git-login",
@@ -85,10 +87,18 @@ private void createCredentials() {
         Secret.fromString("${DO_TOKEN}")
     )
 
+    Credentials npmToken = new StringCredentialsImpl(
+        CredentialsScope.GLOBAL,
+        "npm-token",
+        "description:npm-token",
+        Secret.fromString("${NPM_TOKEN}")
+    )
+
     def credentials_store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
     credentials_store.addCredentials(Domain.global(), githubLogin)
     credentials_store.addCredentials(Domain.global(), gitName)
     credentials_store.addCredentials(Domain.global(), gitEmail)
     credentials_store.addCredentials(Domain.global(), dockerLogin)
     credentials_store.addCredentials(Domain.global(), doToken)
+    credentials_store.addCredentials(Domain.global(), npmToken)
 }
