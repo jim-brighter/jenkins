@@ -71,6 +71,7 @@ node {
         stage("BUILD JENKINS") {
             updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
             sh label: "Build Jenkins Docker Image", script: "./pipeline/build-jenkins.sh"
+            sh label: "Build Nginx Docker Image", script: "./pipeline/build-nginx.sh"
             updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
         }
     }
