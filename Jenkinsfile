@@ -50,8 +50,14 @@ def updateGithubStatus(stage, state, sha) {
 
 node {
 
-    properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')),
-                [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false]])
+    properties([
+        [$class: 'JiraProjectProperty'],
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')),
+        [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
+        pipelineTriggers([
+            [$class: "TimerTrigger", spec: isPushToMaster() ? "H 18 * * 4" : ""]
+        ])
+    ])
 
     deleteDir()
 
