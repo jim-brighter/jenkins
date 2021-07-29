@@ -10,10 +10,10 @@ USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export TERM=linux \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs build-essential zip \
+    && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python-pip nodejs gcc g++ make zip \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
