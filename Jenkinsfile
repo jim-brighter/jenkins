@@ -39,7 +39,7 @@ def updateGithubStatus(stage, state, sha) {
                     -X POST \
                     -d '{
                         "state": "'"$state"'",
-                        "target_url": "'"http://jimsjenkins.xyz/blue/organizations/jenkins/Jenkins/detail/$branch/$buildNumber/pipeline/"'",
+                        "target_url": "'"http://jimsjenkins.xyz/job/Jenkins/job/$branch/$buildNumber/"'",
                         "description": "'"$stage - $state"'",
                         "context": "'"continuous-integration/jenkins/$stage"'"
                     }'
