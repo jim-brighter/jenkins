@@ -10,28 +10,21 @@ USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export TERM=linux \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common python3-pip nodejs gcc g++ make zip \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && apt-get install -y apt-transport-https ca-certificates curl gnupg gnupg2 lsb-release software-properties-common python3-pip nodejs gcc g++ make zip \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
     && apt-get update \
     && apt-get install -y docker-ce docker-ce-cli containerd.io \
     && systemctl enable docker \
     && usermod -aG docker jenkins \
-    && curl -L https://github.com/digitalocean/doctl/releases/download/v1.45.0/doctl-1.45.0-linux-amd64.tar.gz -o /opt/doctl-cli.tar.gz \
+    && curl -L https://github.com/digitalocean/doctl/releases/download/v1.69.0/doctl-1.69.0-linux-amd64.tar.gz -o /opt/doctl-cli.tar.gz \
     && mkdir -p /opt/doctl-cli/ \
     && tar -xzf /opt/doctl-cli.tar.gz -C /opt/doctl-cli \
     && ln -s /opt/doctl-cli/doctl /usr/bin/doctl \
-    && rm -f /opt/doctl-cli.tar.gz \
-    && curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/bin/jq \
-    && chmod +x /usr/bin/jq \
-    && curl -L https://golang.org/dl/go1.15.linux-amd64.tar.gz -o /opt/go1.15.linux-amd64.tar.gz \
-    && mkdir -p /opt/go-1.15 \
-    && tar -xzf /opt/go1.15.linux-amd64.tar.gz -C /opt/go-1.15 \
-    && ln -s /opt/go-1.15/go/bin/go /usr/bin/go \
-    && rm -f /opt/go1.15.linux-amd64.tar.gz
+    && rm -f /opt/doctl-cli.tar.gz
 
 USER jenkins
 
