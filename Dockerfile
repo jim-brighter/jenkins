@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:jdk11
+FROM jenkins/jenkins:jdk17-preview
 
 ENV JENKINS_DIR /usr/share/jenkins/ref
 
