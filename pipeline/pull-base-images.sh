@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker pull jenkins/jenkins:jdk11
-docker pull nginx:1.15-alpine
+docker pull jenkins/jenkins:jdk17-preview
+docker pull nginx:1.21-alpine
