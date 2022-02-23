@@ -19,35 +19,6 @@ def SUCCESS = "success"
 
 def GIT_COMMIT
 
-def updateGithubStatus(stage, state, sha) {
-    withCredentials([
-        usernamePassword(credentialsId: 'git-login', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')
-    ]) {
-        def branch = isPr() ? env.CHANGE_BRANCH : env.BRANCH_NAME
-        withEnv([
-            "sha=${sha}",
-            "state=${state}",
-            "stage=${stage}",
-            "branch=${env.BRANCH_NAME}",
-            "buildNumber=${env.BUILD_NUMBER}"
-        ]) {
-            sh '''
-                curl --output /dev/null --silent --fail https://api.github.com/repos/jim-brighter/jenkins/statuses/$sha \
-                    -H "Authorization: token $GIT_PASSWORD" \
-                    -H "Accept: application/vnd.github.v3+json" \
-                    -H "Content-Type: application/json" \
-                    -X POST \
-                    -d '{
-                        "state": "'"$state"'",
-                        "target_url": "'"http://jimsjenkins.xyz/job/Jenkins/job/$branch/$buildNumber/"'",
-                        "description": "'"$stage - $state"'",
-                        "context": "'"continuous-integration/jenkins/$stage"'"
-                    }'
-            '''
-        }
-    }
-}
-
 node {
 
     properties([
@@ -75,24 +46,16 @@ node {
 
         GIT_COMMIT = gitOutput.GIT_COMMIT
 
-        updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
-
         sh "chmod +x ./pipeline/*.sh"
-
-        updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
     }
 
     stage("PULL BASE IMAGES") {
-        updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
         sh label: "Pull Base Images", script: "./pipeline/pull-base-images.sh"
-        updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
     }
 
     stage("BUILD JENKINS") {
-        updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
         sh label: "Build Jenkins Docker Image", script: "./pipeline/build-jenkins.sh"
         sh label: "Build Nginx Docker Image", script: "./pipeline/build-nginx.sh"
-        updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
     }
 
     if (isPr()) {
@@ -101,17 +64,14 @@ node {
     }
 
     stage("PUSH DOCKER") {
-        updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
         withCredentials([
             usernamePassword(credentialsId: "docker-login", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
         ]) {
             sh label: "Push Docker Image", script: "./pipeline/push-docker.sh"
         }
-        updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
     }
 
     stage("TAG") {
-        updateGithubStatus(STAGE_NAME, PENDING, GIT_COMMIT)
         withCredentials([
             usernamePassword(credentialsId: "git-login", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')
         ]) {
@@ -127,6 +87,5 @@ node {
                 sh label: "Push Git Tag", script: "./pipeline/push-git-tag.sh"
             }
         }
-        updateGithubStatus(STAGE_NAME, SUCCESS, GIT_COMMIT)
     }
 }
