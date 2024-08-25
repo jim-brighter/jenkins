@@ -1,0 +1,38 @@
+networks:
+  jenkins:
+volumes:
+  jenkins-home:
+  jenkins-docker-certs:
+services:
+  jenkins-docker:
+    container_name: jenkins-docker
+    image: docker:dind
+    privileged: true
+    networks:
+      jenkins:
+        aliases:
+          - docker
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-home:/var/jenkins_home
+    ports:
+      - "2376:2376"
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+  jenkins:
+    container_name: jenkins
+    image: jimbrighter/jenkins:latest
+    networks:
+      jenkins:
+        aliases:
+          - jenkins
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-home:/var/jenkins_home
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
